@@ -1,0 +1,18 @@
+version: '3'
+services:
+  springboot-cassandra:
+    image: "example/springboot-cassandra"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - cassandra
+    restart: on-failure
+  cassandra:
+    image: "cassandra:latest"
+    ports:
+      - "9042:9042"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9042"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
